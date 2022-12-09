@@ -46,6 +46,7 @@ definitions:
         example: No wikipedia article found.
         type: string
       missing:
+        example: true
         type: boolean
       status:
         example: success

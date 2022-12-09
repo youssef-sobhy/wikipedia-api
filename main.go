@@ -176,6 +176,7 @@ func httpMissingHandler(c *gin.Context, message string) {
 	c.JSON(http.StatusOK, MissingResponse{
 		Status:  "success",
 		Message: message,
+		Missing: true,
 	})
 }
 
@@ -214,7 +215,7 @@ type SuccessResponse struct {
 type MissingResponse struct {
 	Status  string `json:"status" example:"success"`
 	Message string `json:"message" example:"No wikipedia article found."`
-	Missing bool   `json:"missing"`
+	Missing bool   `json:"missing" example:"true"`
 }
 
 type ErrorResponse struct {

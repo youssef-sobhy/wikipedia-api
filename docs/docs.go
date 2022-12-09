@@ -151,7 +151,8 @@ const docTemplate = `{
                     "example": "No wikipedia article found."
                 },
                 "missing": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "example": true
                 },
                 "status": {
                     "type": "string",
