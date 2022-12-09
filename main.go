@@ -200,7 +200,7 @@ func internalServerError(c *gin.Context, err error) {
 	httpErrorHandler(
 		c,
 		http.StatusInternalServerError,
-		"An internal server error occurred. Please contact the developer at youssefsobhy22@gmail.com and provide the request ID above.",
+		"An internal server error occurred. Please contact the developer at youssefsobhy22@gmail.com and provide the request ID.",
 	)
 
 	log.Printf("Request ID: %s, Error: %s", c.GetString("reqID"), err.Error())
@@ -235,7 +235,7 @@ type HTTPError struct {
 type InternalServerError struct {
 	Code      int    `json:"code" example:"500"`
 	RequestID string `json:"request_id" example:"f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c"`
-	Detail    string `json:"detail" example:"An internal server error occurred. Please contact the developer at youssefsobhy22@gmail.com and provide the request ID above."`
+	Detail    string `json:"detail" example:"An internal server error occurred. Please contact the developer at youssefsobhy22@gmail.com and provide the request ID."`
 }
 
 type wikipediaResponse struct {

@@ -34,10 +34,21 @@ definitions:
         type: integer
       detail:
         example: An internal server error occurred. Please contact the developer at
-          youssefsobhy22@gmail.com and provide the request ID above.
+          youssefsobhy22@gmail.com and provide the request ID.
         type: string
       request_id:
         example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
+        type: string
+    type: object
+  main.MissingResponse:
+    properties:
+      message:
+        example: No wikipedia article found.
+        type: string
+      missing:
+        type: boolean
+      status:
+        example: success
         type: string
     type: object
   main.SuccessResponse:
@@ -85,7 +96,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.SuccessResponse'
+            $ref: '#/definitions/main.MissingResponse'
         "400":
           description: Bad Request
           schema:

@@ -53,7 +53,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.SuccessResponse"
+                            "$ref": "#/definitions/main.MissingResponse"
                         }
                     },
                     "400": {
@@ -123,11 +123,27 @@
                 },
                 "detail": {
                     "type": "string",
-                    "example": "An internal server error occurred. Please contact the developer at youssefsobhy22@gmail.com and provide the request ID above."
+                    "example": "An internal server error occurred. Please contact the developer at youssefsobhy22@gmail.com and provide the request ID."
                 },
                 "request_id": {
                     "type": "string",
                     "example": "f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c"
+                }
+            }
+        },
+        "main.MissingResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "No wikipedia article found."
+                },
+                "missing": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "success"
                 }
             }
         },
