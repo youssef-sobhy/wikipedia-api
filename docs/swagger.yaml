@@ -40,6 +40,16 @@ definitions:
         example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
         type: string
     type: object
+  main.InternalServerErrorResponse:
+    properties:
+      errors:
+        items:
+          $ref: '#/definitions/main.InternalServerError'
+        type: array
+      status:
+        example: error
+        type: string
+    type: object
   main.MissingResponse:
     properties:
       message:
@@ -78,7 +88,7 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/main.InternalServerError'
+            $ref: '#/definitions/main.InternalServerErrorResponse'
       summary: Check if the API is operational.
   /api/search:
     get:
@@ -105,6 +115,6 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/main.InternalServerError'
+            $ref: '#/definitions/main.InternalServerErrorResponse'
       summary: Search for a short description of a person, place, or thing.
 swagger: "2.0"

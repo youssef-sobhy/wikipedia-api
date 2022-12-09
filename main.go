@@ -83,7 +83,7 @@ func main() {
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}  SuccessResponse
-//	@Failure		500	{object}  InternalServerError
+//	@Failure		500	{object}  InternalServerErrorResponse
 //	@Router			/api [get]
 func health(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
@@ -101,7 +101,7 @@ func health(c *gin.Context) {
 //	@Success		200		{object}	SuccessResponse
 //	@Success    200   {object}  MissingResponse
 //	@Failure		400		{object}	ErrorResponse
-//	@Failure		500		{object}	InternalServerError
+//	@Failure		500		{object}	InternalServerErrorResponse
 //	@Router			/api/search [get]
 func search(c *gin.Context) {
 	wikipediaURL := os.Getenv("WIKIPEDIA_API_URL")
@@ -221,6 +221,11 @@ type MissingResponse struct {
 type ErrorResponse struct {
 	Status string      `json:"status" example:"error"`
 	Errors []HTTPError `json:"errors"`
+}
+
+type InternalServerErrorResponse struct {
+	Status string                `json:"status" example:"error"`
+	Errors []InternalServerError `json:"errors"`
 }
 
 type Data struct {

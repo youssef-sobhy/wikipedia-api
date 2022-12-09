@@ -36,7 +36,7 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/main.InternalServerError"
+                            "$ref": "#/definitions/main.InternalServerErrorResponse"
                         }
                     }
                 }
@@ -77,7 +77,7 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/main.InternalServerError"
+                            "$ref": "#/definitions/main.InternalServerErrorResponse"
                         }
                     }
                 }
@@ -140,6 +140,21 @@ const docTemplate = `{
                 "request_id": {
                     "type": "string",
                     "example": "f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c"
+                }
+            }
+        },
+        "main.InternalServerErrorResponse": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.InternalServerError"
+                    }
+                },
+                "status": {
+                    "type": "string",
+                    "example": "error"
                 }
             }
         },
