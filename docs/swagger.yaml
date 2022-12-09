@@ -1,0 +1,15 @@
+basePath: /api
+host: localhost:8080
+info:
+  contact:
+    email: youssefsobhy22@gmail.com
+    name: Youssef Sobhy
+  description: This API is used to get the short description of a given wikipedia
+    article.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Wikipedia Clone API
+  version: "1.0"
+paths: {}
+swagger: "2.0"

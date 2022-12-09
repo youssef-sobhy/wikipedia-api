@@ -1,0 +1,19 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This API is used to get the short description of a given wikipedia article.",
+        "title": "Wikipedia Clone API",
+        "contact": {
+            "name": "Youssef Sobhy",
+            "email": "youssefsobhy22@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api",
+    "paths": {}
+}
