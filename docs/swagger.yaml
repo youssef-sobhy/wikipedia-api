@@ -1,15 +1,98 @@
-basePath: /api
-host: localhost:8080
+definitions:
+  main.Data:
+    properties:
+      short_description:
+        example: A short description of the person, place, or thing you searched for.
+        type: string
+    type: object
+  main.ErrorResponse:
+    properties:
+      errors:
+        items:
+          $ref: '#/definitions/main.HTTPError'
+        type: array
+      status:
+        example: error
+        type: string
+    type: object
+  main.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      detail:
+        example: Query parameter is required
+        type: string
+      request_id:
+        example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
+        type: string
+    type: object
+  main.InternalServerError:
+    properties:
+      code:
+        example: 500
+        type: integer
+      detail:
+        example: An internal server error occurred. Please contact the developer at
+          youssefsobhy22@gmail.com and provide the request ID above.
+        type: string
+      request_id:
+        example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
+        type: string
+    type: object
+  main.SuccessResponse:
+    properties:
+      data:
+        $ref: '#/definitions/main.Data'
+      status:
+        example: success
+        type: string
+    type: object
 info:
-  contact:
-    email: youssefsobhy22@gmail.com
-    name: Youssef Sobhy
-  description: This API is used to get the short description of a given wikipedia
-    article.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: Wikipedia Clone API
-  version: "1.0"
-paths: {}
+  contact: {}
+paths:
+  /api:
+    get:
+      consumes:
+      - application/json
+      description: Check if the API is operational.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.SuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.InternalServerError'
+      summary: Check if the API is operational.
+  /api/search:
+    get:
+      consumes:
+      - application/json
+      description: Search for a short description of a person, place, or thing.
+      parameters:
+      - description: The name of the person, place, or thing you want to search for.
+        in: query
+        name: query
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.InternalServerError'
+      summary: Search for a short description of a person, place, or thing.
 swagger: "2.0"
