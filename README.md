@@ -33,11 +33,11 @@ Documentation available at https://wikipedia.youssefsobhy.com/api/v1/docs/index.
   ```
 - Install the dependencies
   ```bash
-  go get
+  go get -t ./...
   ```
 - Run the server
   ```bash
-  go run main.go
+  go run cmd/main.go
   ```
 - Open your browser and go to http://localhost:3000 to see the API in action
 
