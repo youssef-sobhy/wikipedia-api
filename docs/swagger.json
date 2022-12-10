@@ -17,7 +17,7 @@
         },
         "version": "1.0.0"
     },
-    "host": "wikipedia-api.youssefsobhy.com",
+    "host": "wikipedia.youssefsobhy.com",
     "basePath": "/",
     "paths": {
         "/api": {

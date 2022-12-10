@@ -25,7 +25,7 @@ import (
 // @contact.name Youssef Sobhy
 // @contact.email youssefsobhy22@gmail.com
 
-// @host wikipedia-api.youssefsobhy.com
+// @host wikipedia.youssefsobhy.com
 
 // @schemes https http
 

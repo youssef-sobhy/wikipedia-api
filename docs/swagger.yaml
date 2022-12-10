@@ -59,7 +59,7 @@ definitions:
         example: success
         type: string
     type: object
-host: wikipedia-api.youssefsobhy.com
+host: wikipedia.youssefsobhy.com
 info:
   contact:
     email: youssefsobhy22@gmail.com
