@@ -50,7 +50,7 @@ definitions:
         example: error
         type: string
     type: object
-  main.MissingResponse:
+  main.NoDescriptionResponse:
     properties:
       message:
         example: No wikipedia article found.
@@ -107,7 +107,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.MissingResponse'
+            $ref: '#/definitions/main.NoDescriptionResponse'
         "400":
           description: Bad Request
           schema:

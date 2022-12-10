@@ -65,7 +65,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.MissingResponse"
+                            "$ref": "#/definitions/main.NoDescriptionResponse"
                         }
                     },
                     "400": {
@@ -158,7 +158,7 @@ const docTemplate = `{
                 }
             }
         },
-        "main.MissingResponse": {
+        "main.NoDescriptionResponse": {
             "type": "object",
             "properties": {
                 "message": {

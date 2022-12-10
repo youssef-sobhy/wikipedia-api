@@ -70,5 +70,8 @@ Documentation available at https://wikipedia.youssefsobhy.com/api/docs/index.htm
 ## License
 [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
 
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
 ## Authors and acknowledgment
 - Youssef Sobhy - [youssef1337](https://github.com/youssef1337)

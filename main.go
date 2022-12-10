@@ -46,7 +46,7 @@ func main() {
 	r.Use(gin.Logger())
 	r.Use(gin.CustomRecovery(func(c *gin.Context, recovered interface{}) {
 		log.Printf("PANIC: %v", recovered)
-		internalServerError(c, fmt.Errorf("%v", recovered))
+		InternalServerErrorHandler(c, fmt.Errorf("%v", recovered))
 	}))
 
 	r.GET("/panic", func(c *gin.Context) {
@@ -99,7 +99,7 @@ func health(c *gin.Context) {
 //	@Produce		json
 //	@Param			query	query		string	true	"The name of the person, place, or thing you want to search for."
 //	@Success		200		{object}	SuccessResponse
-//	@Success    200   {object}  MissingResponse
+//	@Success    200   {object}  NoDescriptionResponse
 //	@Failure		400		{object}	ErrorResponse
 //	@Failure		500		{object}	InternalServerErrorResponse
 //	@Router			/api/search [get]
@@ -108,7 +108,7 @@ func search(c *gin.Context) {
 
 	query := c.Query("query")
 	if query == "" {
-		badRequestError(c, "Query parameter is required.")
+		BadRequestErrorHandler(c, "Query parameter is required.")
 
 		return
 	}
@@ -116,7 +116,7 @@ func search(c *gin.Context) {
 	url := fmt.Sprintf("%s?action=query&prop=revisions&titles=%s&rvlimit=1&formatversion=2&format=json&rvprop=content", wikipediaURL, query)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		internalServerError(c, err)
+		InternalServerErrorHandler(c, err)
 
 		return
 	}
@@ -124,7 +124,13 @@ func search(c *gin.Context) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		internalServerError(c, err)
+		InternalServerErrorHandler(c, err)
+
+		return
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		WikipediaApiError(c, resp.StatusCode)
 
 		return
 	}
@@ -132,22 +138,22 @@ func search(c *gin.Context) {
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		internalServerError(c, err)
+		InternalServerErrorHandler(c, err)
 
 		return
 	}
 
-	var response wikipediaResponse
+	var response WikipediaResponse
 
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		internalServerError(c, err)
+		InternalServerErrorHandler(c, err)
 
 		return
 	}
 
 	if response.Query.Pages[0].Missing {
-		httpMissingHandler(c, "No wikipedia article found.")
+		httpNoDescriptionHandler(c, "No wikipedia article found.", true)
 
 		return
 	}
@@ -157,30 +163,30 @@ func search(c *gin.Context) {
 	shortDescription := re.FindStringSubmatch(content)
 
 	if len(shortDescription) == 0 {
-		httpMissingHandler(c, "No short description found in english wikipedia.")
+		httpNoDescriptionHandler(c, "No short description found for this article.", false)
 
 		return
 	}
 
-	httpSuccessHandler(c, shortDescription[1])
+	HttpSuccessHandler(c, shortDescription[1])
 }
 
-func httpSuccessHandler(c *gin.Context, shortDescription string) {
+func HttpSuccessHandler(c *gin.Context, shortDescription string) {
 	c.JSON(http.StatusOK, SuccessResponse{
 		Status: "success",
 		Data:   Data{ShortDescription: shortDescription},
 	})
 }
 
-func httpMissingHandler(c *gin.Context, message string) {
-	c.JSON(http.StatusOK, MissingResponse{
+func httpNoDescriptionHandler(c *gin.Context, message string, missing bool) {
+	c.JSON(http.StatusOK, NoDescriptionResponse{
 		Status:  "success",
 		Message: message,
-		Missing: true,
+		Missing: missing,
 	})
 }
 
-func httpErrorHandler(c *gin.Context, code int, message string) {
+func HttpErrorHandler(c *gin.Context, code int, message string) {
 	c.JSON(code, ErrorResponse{
 		Status: "error",
 		Errors: []HTTPError{
@@ -193,12 +199,20 @@ func httpErrorHandler(c *gin.Context, code int, message string) {
 	})
 }
 
-func badRequestError(c *gin.Context, message string) {
-	httpErrorHandler(c, http.StatusBadRequest, message)
+func BadRequestErrorHandler(c *gin.Context, message string) {
+	HttpErrorHandler(c, http.StatusBadRequest, message)
 }
 
-func internalServerError(c *gin.Context, err error) {
-	httpErrorHandler(
+func WikipediaApiError(c *gin.Context, httpStatusCode int) {
+	HttpErrorHandler(
+		c,
+		http.StatusInternalServerError,
+		fmt.Sprintf("An error occurred while communicating with the wikipedia API with http code %v. Please find more information at https://en.wikipedia.org/w/api.php.", httpStatusCode),
+	)
+}
+
+func InternalServerErrorHandler(c *gin.Context, err error) {
+	HttpErrorHandler(
 		c,
 		http.StatusInternalServerError,
 		"An internal server error occurred. Please contact the developer at youssefsobhy22@gmail.com and provide the request ID.",
@@ -212,7 +226,7 @@ type SuccessResponse struct {
 	Data   Data   `json:"data"`
 }
 
-type MissingResponse struct {
+type NoDescriptionResponse struct {
 	Status  string `json:"status" example:"success"`
 	Message string `json:"message" example:"No wikipedia article found."`
 	Missing bool   `json:"missing" example:"true"`
@@ -244,7 +258,7 @@ type InternalServerError struct {
 	Detail    string `json:"detail" example:"An internal server error occurred. Please contact the developer at youssefsobhy22@gmail.com and provide the request ID."`
 }
 
-type wikipediaResponse struct {
+type WikipediaResponse struct {
 	Query Query `json:"query"`
 }
 
