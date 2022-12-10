@@ -70,6 +70,29 @@ definitions:
         example: success
         type: string
     type: object
+  main.WikipediaApiError:
+    properties:
+      code:
+        example: 500
+        type: integer
+      detail:
+        example: An error occurred while communicating with the wikipedia API with
+          http code 500. Please find more information at https://en.wikipedia.org/w/api.php.
+        type: string
+      request_id:
+        example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
+        type: string
+    type: object
+  main.WikipediaApiErrorResponse:
+    properties:
+      errors:
+        items:
+          $ref: '#/definitions/main.WikipediaApiError'
+        type: array
+      status:
+        example: error
+        type: string
+    type: object
 info:
   contact: {}
 paths:

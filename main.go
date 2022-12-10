@@ -101,6 +101,7 @@ func health(c *gin.Context) {
 //	@Success		200		{object}	SuccessResponse
 //	@Success    200   {object}  NoDescriptionResponse
 //	@Failure		400		{object}	ErrorResponse
+//	@Failure		500		{object}	WikipediaApiErrorResponse
 //	@Failure		500		{object}	InternalServerErrorResponse
 //	@Router			/api/search [get]
 func search(c *gin.Context) {
@@ -130,7 +131,7 @@ func search(c *gin.Context) {
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		WikipediaApiError(c, resp.StatusCode)
+		WikipediaApiErrorHandler(c, resp.StatusCode)
 
 		return
 	}
@@ -203,7 +204,7 @@ func BadRequestErrorHandler(c *gin.Context, message string) {
 	HttpErrorHandler(c, http.StatusBadRequest, message)
 }
 
-func WikipediaApiError(c *gin.Context, httpStatusCode int) {
+func WikipediaApiErrorHandler(c *gin.Context, httpStatusCode int) {
 	HttpErrorHandler(
 		c,
 		http.StatusInternalServerError,
@@ -242,6 +243,11 @@ type InternalServerErrorResponse struct {
 	Errors []InternalServerError `json:"errors"`
 }
 
+type WikipediaApiErrorResponse struct {
+	Status string              `json:"status" example:"error"`
+	Errors []WikipediaApiError `json:"errors"`
+}
+
 type Data struct {
 	ShortDescription string `json:"short_description" example:"A short description of the person, place, or thing you searched for."`
 }
@@ -250,6 +256,12 @@ type HTTPError struct {
 	Code      int    `json:"code" example:"400"`
 	RequestID string `json:"request_id" example:"f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c"`
 	Detail    string `json:"detail" example:"Query parameter is required"`
+}
+
+type WikipediaApiError struct {
+	Code      int    `json:"code" example:"500"`
+	RequestID string `json:"request_id" example:"f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c"`
+	Detail    string `json:"detail" example:"An error occurred while communicating with the wikipedia API with http code 500. Please find more information at https://en.wikipedia.org/w/api.php."`
 }
 
 type InternalServerError struct {

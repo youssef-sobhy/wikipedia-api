@@ -174,6 +174,38 @@
                     "example": "success"
                 }
             }
+        },
+        "main.WikipediaApiError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 500
+                },
+                "detail": {
+                    "type": "string",
+                    "example": "An error occurred while communicating with the wikipedia API with http code 500. Please find more information at https://en.wikipedia.org/w/api.php."
+                },
+                "request_id": {
+                    "type": "string",
+                    "example": "f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c"
+                }
+            }
+        },
+        "main.WikipediaApiErrorResponse": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.WikipediaApiError"
+                    }
+                },
+                "status": {
+                    "type": "string",
+                    "example": "error"
+                }
+            }
         }
     }
 }
