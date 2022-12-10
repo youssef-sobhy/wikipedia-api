@@ -8,6 +8,7 @@ Documentation available at https://wikipedia.youssefsobhy.com/api/docs/index.htm
 ![Go Version](https://img.shields.io/github/go-mod/go-version/youssef1337/wikipedia-api)
 ![Uptime](https://img.shields.io/uptimerobot/ratio/m793223758-f73506a770999c5e13ade54f)
 ![Status](https://img.shields.io/uptimerobot/status/m793223758-f73506a770999c5e13ade54f)
+![B&T](https://github.com/youssef1337/wikipedia-api/actions/workflows/build-and-run-tests.yaml/badge.svg)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
 ## Table of contents
