@@ -1,0 +1,176 @@
+openapi: 3.0.1
+info:
+  title: Wikipedia Clone API
+  description: This API is used to get the short description of a given wikipedia
+    article.
+  contact:
+    name: Youssef Sobhy
+    email: youssefsobhy22@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0"
+servers:
+- url: https://wikipedia.youssefsobhy.com/api
+paths:
+  /api:
+    get:
+      summary: Check if the API is operational.
+      description: Check if the API is operational.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/main.SuccessResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/main.InternalServerErrorResponse'
+  /api/search:
+    get:
+      summary: Search for a short description of a person, place, or thing.
+      description: Search for a short description of a person, place, or thing.
+      parameters:
+      - name: query
+        in: query
+        description: The name of the person, place, or thing you want to search for.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/main.SuccessResponse'
+                  - $ref: '#/components/schemas/main.MissingResponse'
+                  - $ref: '#/components/schemas/main.NoDescriptionResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/main.ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/main.InternalServerErrorResponse'
+                  - $ref: '#/components/schemas/main.WikipediaApiErrorResponse'
+components:
+  schemas:
+    main.Data:
+      type: object
+      properties:
+        short_description:
+          type: string
+          example: A short description of the person, place, or thing you searched
+            for.
+    main.ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/main.HTTPError'
+        status:
+          type: string
+          example: error
+    main.HTTPError:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 400
+        detail:
+          type: string
+          example: Query parameter is required
+        request_id:
+          type: string
+          example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
+    main.InternalServerError:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 500
+        detail:
+          type: string
+          example: An internal server error occurred. Please contact the developer
+            at youssefsobhy22@gmail.com and provide the request ID.
+        request_id:
+          type: string
+          example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
+    main.InternalServerErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/main.InternalServerError'
+        status:
+          type: string
+          example: error
+    main.MissingResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: No wikipedia article found.
+        missing:
+          type: boolean
+          example: true
+        status:
+          type: string
+          example: success
+    main.NoDescriptionResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: No short description found for this article.
+        missing:
+          type: boolean
+          example: false
+        status:
+          type: string
+          example: success
+    main.SuccessResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/main.Data'
+        status:
+          type: string
+          example: success
+    main.WikipediaApiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 500
+        detail:
+          type: string
+          example: An error occurred while communicating with the wikipedia API with
+            http code 500. Please find more information at https://en.wikipedia.org/w/api.php.
+        request_id:
+          type: string
+          example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
+    main.WikipediaApiErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/main.WikipediaApiError'
+        status:
+          type: string
+          example: error

@@ -10,7 +10,14 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {},
+        "contact": {
+            "name": "Youssef Sobhy",
+            "email": "youssefsobhy22@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -30,13 +37,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.SuccessResponse"
+                            "$ref": "#/definitions/internal.SuccessResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/main.InternalServerErrorResponse"
+                            "$ref": "#/definitions/internal.InternalServerErrorResponse"
                         }
                     }
                 }
@@ -65,19 +72,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.NoDescriptionResponse"
+                            "$ref": "#/definitions/internal.SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/main.ErrorResponse"
+                            "$ref": "#/definitions/internal.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/main.InternalServerErrorResponse"
+                            "$ref": "#/definitions/internal.InternalServerErrorResponse"
                         }
                     }
                 }
@@ -85,7 +92,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "main.Data": {
+        "internal.Data": {
             "type": "object",
             "properties": {
                 "short_description": {
@@ -94,13 +101,13 @@ const docTemplate = `{
                 }
             }
         },
-        "main.ErrorResponse": {
+        "internal.ErrorResponse": {
             "type": "object",
             "properties": {
                 "errors": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/main.HTTPError"
+                        "$ref": "#/definitions/internal.HTTPError"
                     }
                 },
                 "status": {
@@ -109,7 +116,7 @@ const docTemplate = `{
                 }
             }
         },
-        "main.HTTPError": {
+        "internal.HTTPError": {
             "type": "object",
             "properties": {
                 "code": {
@@ -126,7 +133,7 @@ const docTemplate = `{
                 }
             }
         },
-        "main.InternalServerError": {
+        "internal.InternalServerError": {
             "type": "object",
             "properties": {
                 "code": {
@@ -143,13 +150,13 @@ const docTemplate = `{
                 }
             }
         },
-        "main.InternalServerErrorResponse": {
+        "internal.InternalServerErrorResponse": {
             "type": "object",
             "properties": {
                 "errors": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/main.InternalServerError"
+                        "$ref": "#/definitions/internal.InternalServerError"
                     }
                 },
                 "status": {
@@ -158,64 +165,15 @@ const docTemplate = `{
                 }
             }
         },
-        "main.NoDescriptionResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string",
-                    "example": "No wikipedia article found."
-                },
-                "missing": {
-                    "type": "boolean",
-                    "example": true
-                },
-                "status": {
-                    "type": "string",
-                    "example": "success"
-                }
-            }
-        },
-        "main.SuccessResponse": {
+        "internal.SuccessResponse": {
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/main.Data"
+                    "$ref": "#/definitions/internal.Data"
                 },
                 "status": {
                     "type": "string",
                     "example": "success"
-                }
-            }
-        },
-        "main.WikipediaApiError": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer",
-                    "example": 500
-                },
-                "detail": {
-                    "type": "string",
-                    "example": "An error occurred while communicating with the wikipedia API with http code 500. Please find more information at https://en.wikipedia.org/w/api.php."
-                },
-                "request_id": {
-                    "type": "string",
-                    "example": "f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c"
-                }
-            }
-        },
-        "main.WikipediaApiErrorResponse": {
-            "type": "object",
-            "properties": {
-                "errors": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/main.WikipediaApiError"
-                    }
-                },
-                "status": {
-                    "type": "string",
-                    "example": "error"
                 }
             }
         }
@@ -224,12 +182,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
-	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Version:          "1.0.0",
+	Host:             "wikipedia-api.youssefsobhy.com",
+	BasePath:         "/",
+	Schemes:          []string{"https", "http"},
+	Title:            "Wikipedia API",
+	Description:      "A simple API to get the short description of a wikipedia article.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

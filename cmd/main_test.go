@@ -10,6 +10,7 @@ import (
 	"github.com/jarcoal/httpmock"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	"github.com/youssef1337/wikipedia-api/internal"
 )
 
 var _ = BeforeSuite(func() {
@@ -34,7 +35,7 @@ var _ = Describe("WikipediaApi", func() {
 				http.NewRequest("GET", "/api", nil)
 				w := httptest.NewRecorder()
 				c, _ := gin.CreateTestContext(w)
-				health(c)
+				internal.Health(c)
 				var response map[string]interface{}
 				json.Unmarshal(w.Body.Bytes(), &response)
 
@@ -52,8 +53,8 @@ var _ = Describe("WikipediaApi", func() {
 				http.NewRequest("GET", "/api/search", nil)
 				w := httptest.NewRecorder()
 				c, _ := gin.CreateTestContext(w)
-				search(c)
-				var response ErrorResponse
+				internal.Search(c)
+				var response internal.ErrorResponse
 				json.Unmarshal(w.Body.Bytes(), &response)
 
 				defer w.Result().Body.Close()
@@ -97,8 +98,8 @@ var _ = Describe("WikipediaApi", func() {
 					w := httptest.NewRecorder()
 					c, _ := gin.CreateTestContext(w)
 					c.Request = req
-					search(c)
-					var response SuccessResponse
+					internal.Search(c)
+					var response internal.SuccessResponse
 					json.Unmarshal(w.Body.Bytes(), &response)
 
 					defer w.Result().Body.Close()
@@ -134,8 +135,8 @@ var _ = Describe("WikipediaApi", func() {
 					w := httptest.NewRecorder()
 					c, _ := gin.CreateTestContext(w)
 					c.Request = req
-					search(c)
-					var response NoDescriptionResponse
+					internal.Search(c)
+					var response internal.MissingResponse
 					json.Unmarshal(w.Body.Bytes(), &response)
 
 					defer w.Result().Body.Close()
@@ -180,8 +181,8 @@ var _ = Describe("WikipediaApi", func() {
 					w := httptest.NewRecorder()
 					c, _ := gin.CreateTestContext(w)
 					c.Request = req
-					search(c)
-					var response NoDescriptionResponse
+					internal.Search(c)
+					var response internal.NoDescriptionResponse
 					json.Unmarshal(w.Body.Bytes(), &response)
 
 					defer w.Result().Body.Close()
@@ -206,8 +207,8 @@ var _ = Describe("WikipediaApi", func() {
 					w := httptest.NewRecorder()
 					c, _ := gin.CreateTestContext(w)
 					c.Request = req
-					search(c)
-					var response ErrorResponse
+					internal.Search(c)
+					var response internal.ErrorResponse
 					json.Unmarshal(w.Body.Bytes(), &response)
 
 					defer w.Result().Body.Close()

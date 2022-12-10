@@ -1,21 +1,22 @@
+basePath: /
 definitions:
-  main.Data:
+  internal.Data:
     properties:
       short_description:
         example: A short description of the person, place, or thing you searched for.
         type: string
     type: object
-  main.ErrorResponse:
+  internal.ErrorResponse:
     properties:
       errors:
         items:
-          $ref: '#/definitions/main.HTTPError'
+          $ref: '#/definitions/internal.HTTPError'
         type: array
       status:
         example: error
         type: string
     type: object
-  main.HTTPError:
+  internal.HTTPError:
     properties:
       code:
         example: 400
@@ -27,7 +28,7 @@ definitions:
         example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
         type: string
     type: object
-  main.InternalServerError:
+  internal.InternalServerError:
     properties:
       code:
         example: 500
@@ -40,61 +41,35 @@ definitions:
         example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
         type: string
     type: object
-  main.InternalServerErrorResponse:
+  internal.InternalServerErrorResponse:
     properties:
       errors:
         items:
-          $ref: '#/definitions/main.InternalServerError'
+          $ref: '#/definitions/internal.InternalServerError'
         type: array
       status:
         example: error
         type: string
     type: object
-  main.NoDescriptionResponse:
-    properties:
-      message:
-        example: No wikipedia article found.
-        type: string
-      missing:
-        example: true
-        type: boolean
-      status:
-        example: success
-        type: string
-    type: object
-  main.SuccessResponse:
+  internal.SuccessResponse:
     properties:
       data:
-        $ref: '#/definitions/main.Data'
+        $ref: '#/definitions/internal.Data'
       status:
         example: success
         type: string
     type: object
-  main.WikipediaApiError:
-    properties:
-      code:
-        example: 500
-        type: integer
-      detail:
-        example: An error occurred while communicating with the wikipedia API with
-          http code 500. Please find more information at https://en.wikipedia.org/w/api.php.
-        type: string
-      request_id:
-        example: f7a4c0c0-5b5e-4b4c-9c1f-1b5c1b5c1b5c
-        type: string
-    type: object
-  main.WikipediaApiErrorResponse:
-    properties:
-      errors:
-        items:
-          $ref: '#/definitions/main.WikipediaApiError'
-        type: array
-      status:
-        example: error
-        type: string
-    type: object
+host: wikipedia-api.youssefsobhy.com
 info:
-  contact: {}
+  contact:
+    email: youssefsobhy22@gmail.com
+    name: Youssef Sobhy
+  description: A simple API to get the short description of a wikipedia article.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Wikipedia API
+  version: 1.0.0
 paths:
   /api:
     get:
@@ -107,11 +82,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.SuccessResponse'
+            $ref: '#/definitions/internal.SuccessResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/main.InternalServerErrorResponse'
+            $ref: '#/definitions/internal.InternalServerErrorResponse'
       summary: Check if the API is operational.
   /api/search:
     get:
@@ -130,14 +105,17 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.NoDescriptionResponse'
+            $ref: '#/definitions/internal.SuccessResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/main.ErrorResponse'
+            $ref: '#/definitions/internal.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/main.InternalServerErrorResponse'
+            $ref: '#/definitions/internal.InternalServerErrorResponse'
       summary: Search for a short description of a person, place, or thing.
+schemes:
+- https
+- http
 swagger: "2.0"
