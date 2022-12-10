@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/pborman/uuid"
 	swaggerFiles "github.com/swaggo/files"
@@ -47,6 +48,12 @@ func main() {
 		log.Printf("PANIC: %v", recovered)
 		internal.InternalServerErrorHandler(c, fmt.Errorf("%v", recovered))
 	}))
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://wikipedia.youssefsobhy.com"}
+	config.AllowMethods = []string{"GET"}
+
+	r.Use(cors.New(config))
 
 	api := r.Group("/api")
 	{

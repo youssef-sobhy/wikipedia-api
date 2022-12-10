@@ -34,7 +34,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/internal.SuccessResponse"
+                            "$ref": "#/definitions/internal.CheckHealthResponse"
                         }
                     },
                     "500": {
@@ -89,6 +89,15 @@
         }
     },
     "definitions": {
+        "internal.CheckHealthResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "operational"
+                }
+            }
+        },
         "internal.Data": {
             "type": "object",
             "properties": {

@@ -16,12 +16,12 @@ import (
 // @Description	Check if the API is operational.
 // @Accept			json
 // @Produce		json
-// @Success		200	{object}	SuccessResponse
+// @Success		200	{object}	CheckHealthResponse
 // @Failure		500	{object}	InternalServerErrorResponse
 // @Router			/api [get]
 func Health(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"status": "operational",
+	c.JSON(http.StatusOK, CheckHealthResponse{
+		Status: "operational",
 	})
 }
 

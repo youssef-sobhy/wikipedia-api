@@ -37,7 +37,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/internal.SuccessResponse"
+                            "$ref": "#/definitions/internal.CheckHealthResponse"
                         }
                     },
                     "500": {
@@ -92,6 +92,15 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "internal.CheckHealthResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "operational"
+                }
+            }
+        },
         "internal.Data": {
             "type": "object",
             "properties": {

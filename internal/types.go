@@ -5,6 +5,10 @@ type SuccessResponse struct {
 	Data   Data   `json:"data"`
 }
 
+type CheckHealthResponse struct {
+	Status string `json:"status" example:"operational"`
+}
+
 type MissingResponse struct {
 	Status  string `json:"status" example:"success"`
 	Message string `json:"message" example:"No wikipedia article found."`
