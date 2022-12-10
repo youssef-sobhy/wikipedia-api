@@ -23,7 +23,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api": {
+        "/api/v1": {
             "get": {
                 "description": "Check if the API is operational.",
                 "consumes": [
@@ -49,7 +49,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/search": {
+        "/api/v1/search": {
             "get": {
                 "description": "Search for a short description of a person, place, or thing.",
                 "consumes": [

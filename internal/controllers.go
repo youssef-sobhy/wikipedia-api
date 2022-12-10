@@ -18,7 +18,7 @@ import (
 // @Produce		json
 // @Success		200	{object}	CheckHealthResponse
 // @Failure		500	{object}	InternalServerErrorResponse
-// @Router			/api [get]
+// @Router			/api/v1 [get]
 func Health(c *gin.Context) {
 	c.JSON(http.StatusOK, CheckHealthResponse{
 		Status: "operational",
@@ -35,7 +35,7 @@ func Health(c *gin.Context) {
 //	@Success		200		{object}	SuccessResponse
 //	@Failure		400		{object}	ErrorResponse
 //	@Failure		500		{object}	InternalServerErrorResponse
-//	@Router			/api/search [get]
+//	@Router			/api/v1/search [get]
 func Search(c *gin.Context) {
 	wikipediaURL := os.Getenv("WIKIPEDIA_API_URL")
 

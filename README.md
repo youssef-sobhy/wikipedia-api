@@ -1,9 +1,9 @@
 # Wikipedia API
 This is an API to get short descriptions of Wikipedia articles.
 
-Available at https://wikipedia.youssefsobhy.com/api
+Available at https://wikipedia.youssefsobhy.com/api/v1
 
-Documentation available at https://wikipedia.youssefsobhy.com/api/docs/index.html
+Documentation available at https://wikipedia.youssefsobhy.com/api/v1/docs/index.html
 
 ![Go Version](https://img.shields.io/github/go-mod/go-version/youssef1337/wikipedia-api)
 ![Uptime](https://img.shields.io/uptimerobot/ratio/m793223758-f73506a770999c5e13ade54f)
@@ -43,18 +43,18 @@ Documentation available at https://wikipedia.youssefsobhy.com/api/docs/index.htm
 
 ## Usage
 
-- To get a short description of an article, send a GET request to http://localhost:3000/api/search with the article name as a query parameter
+- To get a short description of an article, send a GET request to http://localhost:3000/api/v1/search with the article name as a query parameter
   ```bash
-  curl http://localhost:3000/api/search?query=Yoshua_Bengio
+  curl http://localhost:3000/api/v1/search?query=Yoshua_Bengio
   ```
-- To check if the API is running, send a GET request to http://localhost:3000/api
+- To check if the API is running, send a GET request to http://localhost:3000/api/v1
   ```bash
-  curl http://localhost:3000/api
+  curl http://localhost:3000/api/v1
   ```
 
 ## API Reference and Documentation
 - [Wikipedia API](https://en.wikipedia.org/w/api.php) - The Wikipedia API I used to get the short descriptions
-- [API Documentation](https://wikipedia.youssefsobhy.com/api/docs/index.html) - The API documentation of this project
+- [API Documentation](https://wikipedia.youssefsobhy.com/api/v1/docs/index.html) - The API documentation of this project
 
 ## Built With
 - [Golang](https://golang.org/) - The programming language used

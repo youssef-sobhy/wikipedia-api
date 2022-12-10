@@ -32,7 +32,7 @@ var _ = Describe("WikipediaApi", func() {
 	Describe("/health", func() {
 		Context("when the server is up", func() {
 			It("should return 200 and status operational", func() {
-				http.NewRequest("GET", "/api", nil)
+				http.NewRequest("GET", "/api/v1", nil)
 				w := httptest.NewRecorder()
 				c, _ := gin.CreateTestContext(w)
 				internal.Health(c)
@@ -50,7 +50,7 @@ var _ = Describe("WikipediaApi", func() {
 	Describe("/search", func() {
 		Context("when the query parameter is missing", func() {
 			It("should return 400 and a 'Query parameter is required.' message", func() {
-				http.NewRequest("GET", "/api/search", nil)
+				http.NewRequest("GET", "/api/v1/search", nil)
 				w := httptest.NewRecorder()
 				c, _ := gin.CreateTestContext(w)
 				internal.Search(c)
@@ -94,7 +94,7 @@ var _ = Describe("WikipediaApi", func() {
 						),
 					)
 
-					req, _ := http.NewRequest("GET", "/api/search?query=Yoshua_Bengio", nil)
+					req, _ := http.NewRequest("GET", "/api/v1/search?query=Yoshua_Bengio", nil)
 					w := httptest.NewRecorder()
 					c, _ := gin.CreateTestContext(w)
 					c.Request = req
@@ -131,7 +131,7 @@ var _ = Describe("WikipediaApi", func() {
 						),
 					)
 
-					req, _ := http.NewRequest("GET", "/api/search?query=Yoshua_Bengio~", nil)
+					req, _ := http.NewRequest("GET", "/api/v1/search?query=Yoshua_Bengio~", nil)
 					w := httptest.NewRecorder()
 					c, _ := gin.CreateTestContext(w)
 					c.Request = req
@@ -177,7 +177,7 @@ var _ = Describe("WikipediaApi", func() {
 						),
 					)
 
-					req, _ := http.NewRequest("GET", "/api/search?query=Kim", nil)
+					req, _ := http.NewRequest("GET", "/api/v1/search?query=Kim", nil)
 					w := httptest.NewRecorder()
 					c, _ := gin.CreateTestContext(w)
 					c.Request = req
@@ -203,7 +203,7 @@ var _ = Describe("WikipediaApi", func() {
 						httpmock.NewStringResponder(500, `{}`),
 					)
 
-					req, _ := http.NewRequest("GET", "/api/search?query=Kim", nil)
+					req, _ := http.NewRequest("GET", "/api/v1/search?query=Kim", nil)
 					w := httptest.NewRecorder()
 					c, _ := gin.CreateTestContext(w)
 					c.Request = req

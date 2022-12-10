@@ -77,7 +77,7 @@ info:
   title: Wikipedia API
   version: 1.0.0
 paths:
-  /api:
+  /api/v1:
     get:
       consumes:
       - application/json
@@ -94,7 +94,7 @@ paths:
           schema:
             $ref: '#/definitions/internal.InternalServerErrorResponse'
       summary: Check if the API is operational.
-  /api/search:
+  /api/v1/search:
     get:
       consumes:
       - application/json

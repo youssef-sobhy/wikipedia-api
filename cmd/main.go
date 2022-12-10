@@ -55,18 +55,18 @@ func main() {
 
 	r.Use(cors.New(config))
 
-	api := r.Group("/api")
+	v1 := r.Group("/api/v1")
 	{
-		api.GET("", internal.Health)
-		api.GET("/search", internal.Search)
-		api.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-		api.GET("/docs", func(c *gin.Context) {
-			c.Redirect(http.StatusMovedPermanently, "/api/docs/index.html")
+		v1.GET("", internal.Health)
+		v1.GET("/search", internal.Search)
+		v1.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+		v1.GET("/docs", func(c *gin.Context) {
+			c.Redirect(http.StatusMovedPermanently, "/api/v1/docs/index.html")
 		})
 	}
 
 	r.GET("/", func(c *gin.Context) {
-		c.Redirect(http.StatusMovedPermanently, "/api/docs/index.html")
+		c.Redirect(http.StatusMovedPermanently, "/api/v1/docs/index.html")
 	})
 
 	port := os.Getenv("PORT")
